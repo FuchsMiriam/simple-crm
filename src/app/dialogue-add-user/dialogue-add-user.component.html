@@ -14,7 +14,7 @@
     </div>
 
     <div>
-      <mat-form-field appearance="outline">
+      <mat-form-field class="full-width" appearance="outline">
         <mat-label>Date of birth</mat-label>
         <input matInput placeholder="Placeholder" [matDatepicker]="picker1" />
         <mat-datepicker-toggle
@@ -25,6 +25,22 @@
       </mat-form-field>
     </div>
 
+    <div>
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Street & number</mat-label>
+        <input matInput placeholder="Placeholder" />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="mr-16" appearance="outline">
+        <mat-label>Zip code</mat-label>
+        <input matInput placeholder="Placeholder" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input matInput placeholder="Placeholder" />
+      </mat-form-field>
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancel</button>

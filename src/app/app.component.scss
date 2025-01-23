@@ -23,6 +23,10 @@ mat-toolbar {
   min-height: 56px;
   display: flex;
   align-items: center;
+  > img {
+    height: 56px;
+    width: auto;
+  }
 }
 
 .menu-items {
@@ -42,7 +46,7 @@ mat-toolbar {
     &:hover {
       background-color: grey;
     }
-    &:focus{
+    &:focus {
       outline: none;
     }
   }

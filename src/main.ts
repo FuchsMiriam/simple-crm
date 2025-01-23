@@ -8,9 +8,13 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from './environments/environment';
 
-
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes), provideAnimations(), provideFirebaseApp(() => initializeApp(environment.firebaseConfig), provideFirestore(() => getFirestore()),),
+    provideRouter(routes),
+    provideAnimations(),
+    provideFirebaseApp(
+      () => initializeApp(environment.firebaseConfig),
+      provideFirestore(() => getFirestore())
+    ),
   ],
-}).catch(err => console.error(err));
+}).catch((err) => console.error(err));

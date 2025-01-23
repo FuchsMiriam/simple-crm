@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { provideFirestore } from '@angular/fire/firestore';
 import {
   MatDialogActions,
   MatDialogContent,
@@ -11,7 +12,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { User } from '../../models/user.class';
 import { FormsModule } from '@angular/forms';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getFirestore } from '@angular/fire/firestore';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-dialogue-add-user',
@@ -25,6 +27,7 @@ import { Firestore, collection, addDoc } from '@angular/fire/firestore';
     MatFormFieldModule,
     MatDatepickerModule,
     FormsModule,
+    MatProgressBarModule
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './dialogue-add-user.component.html',

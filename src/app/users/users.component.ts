@@ -19,6 +19,7 @@ export class UsersComponent {
   constructor(public dialog: MatDialog) {}
 
   openDialogue() {
+    console.log('openDialogue called'); 
     this.dialog.open(DialogueAddUserComponent);
   }
 }

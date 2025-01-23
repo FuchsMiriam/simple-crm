@@ -6,10 +6,11 @@ import { routes } from './app/app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { environment } from './environments/environment';
 
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes), provideAnimations(), provideFirebaseApp(() => initializeApp({ projectId: "simple-crm-4180e", appId: "1:253740735379:web:9154bde3e4c292679de666", storageBucket: "simple-crm-4180e.firebasestorage.app", apiKey: "AIzaSyCqMNFL6EOBzB-WEiP4oWYmWn11kxFMK90", authDomain: "simple-crm-4180e.firebaseapp.com", messagingSenderId: "253740735379" })), provideFirestore(() => getFirestore()),
+    provideRouter(routes), provideAnimations(), provideFirebaseApp(() => initializeApp(environment.firebaseConfig), provideFirestore(() => getFirestore()),),
   ],
 }).catch(err => console.error(err));

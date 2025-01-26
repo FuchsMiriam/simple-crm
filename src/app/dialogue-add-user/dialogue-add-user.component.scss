@@ -1,11 +1,21 @@
-.add-user-container{
-    background-color: grey;
+.add-user-container {
+  background-color: grey;
+  position: relative;
+  >mat-progress-bar {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 10px;
+    width: calc(100%);
+  }
+  
 }
 
-.mr-16{
-    margin-right: 16px;
+.mr-16 {
+  margin-right: 16px;
 }
 
-.full-width{
-    width: 100%;
+.full-width {
+  width: 100%;
 }
+

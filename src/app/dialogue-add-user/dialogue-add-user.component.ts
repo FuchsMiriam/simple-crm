@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { provideFirestore } from '@angular/fire/firestore';
 import {
   MatDialogActions,
@@ -12,13 +13,19 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { User } from '../../models/user.class';
 import { FormsModule } from '@angular/forms';
-import { Firestore, collection, addDoc, getFirestore } from '@angular/fire/firestore';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  getFirestore,
+} from '@angular/fire/firestore';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-dialogue-add-user',
   standalone: true,
   imports: [
+    CommonModule,
     MatDialogTitle,
     MatDialogActions,
     MatDialogContent,
@@ -27,7 +34,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatFormFieldModule,
     MatDatepickerModule,
     FormsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './dialogue-add-user.component.html',
@@ -36,6 +43,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 export class DialogueAddUserComponent {
   user: User = new User();
   birthDate: Date;
+  loading = false;
   private firestore = inject(Firestore);
 
   constructor() {
@@ -45,11 +53,13 @@ export class DialogueAddUserComponent {
   async saveUser() {
     this.user.birthDate = this.birthDate.getTime();
     console.log('Current User', this.user);
+    this.loading = true;
 
     try {
       const usersCollection = collection(this.firestore, 'users');
 
       const result = await addDoc(usersCollection, this.user.toJSON());
+      this.loading = false;
       console.log('Adding user finished', result);
     } catch (error) {
       console.error('Error adding user:', error);

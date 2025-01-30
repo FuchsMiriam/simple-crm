@@ -1,5 +1,54 @@
-.add-user-btn{
-    position: absolute;
-    right: 56px;
-    bottom: 56px;
+mat-card-content {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  tr {
+    border-bottom: 1px solid lightcyan;
+    &:first-child {
+      cursor: unset;
+      &:hover {
+        background-color: unset;
+      }
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+    cursor: pointer;
+
+    &:hover {
+      background-color: lightcyan;
+      td {
+        color: black;
+      }
+    }
+  }
+
+  th {
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: start;
+    &:first-child {
+      padding-left: 16px;
+    }
+  }
+
+  td {
+    color: white;
+    height: 48px;
+    &:first-child {
+      padding-left: 16px;
+    }
+  }
+}
+
+.add-user-btn {
+  position: absolute;
+  right: 56px;
+  bottom: 56px;
 }

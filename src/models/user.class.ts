@@ -5,6 +5,7 @@ export class User {
   street!: string;
   zipCode!: number;
   city!: string;
+  email!: string;
 
   constructor(obj?: any) {
     if (obj) {
@@ -14,6 +15,7 @@ export class User {
       this.street = obj?.street || '';
       this.zipCode = obj?.zipCode || 0;
       this.city = obj?.city || '';
+      this.email = obj?.email || '';
     }
   }
 
@@ -25,6 +27,7 @@ export class User {
       street: this.street || '',
       zipCode: this.zipCode || 0,
       city: this.city || '',
+      email: this.email || '',
     };
   }
 }

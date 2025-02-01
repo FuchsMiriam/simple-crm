@@ -8,19 +8,13 @@
         <th>Email</th>
         <th>Birthday</th>
       </tr>
-      <tr>
-        <td>ndhdb</td>
-        <td>ndksndj</td>
-        <td>lajdjd</td>
-        <td>oaond</td>
-        <td>oemsnd</td>
-      </tr>
-      <tr>
-        <td>ndhdb</td>
-        <td>ndksndj</td>
-        <td>lajdjd</td>
-        <td>oaond</td>
-        <td>oemsnd</td>
+
+      <tr *ngFor="let user of allUsers" [routerLink]="['/user/' + user.customIdName]">
+        <td>{{ user.firstName }} {{ user.lastName }}</td>
+        <td>{{user.street}}</td>
+        <td>{{user.city}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.birthDate}}</td>
       </tr>
     </table>
   </mat-card-content>

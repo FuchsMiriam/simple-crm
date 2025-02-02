@@ -1,0 +1,47 @@
+.mat-mdc-card {
+  display: block;
+  flex-direction: unset;
+}
+
+.user-detail-header {
+  min-height: 250px;
+  background-color: magenta;
+  color: white;
+  display: flex;
+  align-items: flex-end;
+
+  img {
+    height: 80px;
+    width: 80px;
+    border-radius: 100%;
+    object-fit: cover;
+    padding: 10px;
+  }
+}
+
+.user-details {
+  margin-left: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100px;
+  padding: 10px;
+  h2 {
+    margin-bottom: 0;
+  }
+}
+
+.address-details {
+  min-height: auto;
+  color: white;
+}
+
+.pin-right-upper-corner {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: white !important;
+  border-radius: 50%;
+  cursor: pointer;
+}

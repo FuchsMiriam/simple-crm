@@ -1,0 +1,23 @@
+.edit-address-container {
+  background-color: grey;
+  position: relative;
+  color: white;
+  > mat-progress-bar {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 10px;
+    width: calc(100%);
+  }
+}
+
+::ng-deep
+  .mat-mdc-dialog-container
+  .mat-mdc-dialog-title
+  + .mat-mdc-dialog-content {
+  padding-top: 10px;
+}
+
+.mr-16 {
+  margin-right: 16px;
+}

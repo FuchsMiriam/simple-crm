@@ -45,7 +45,6 @@ export class UsersComponent {
 
 
   openDialogue() {
-    console.log('openDialogue called');
     this.dialog.open(DialogueAddUserComponent);
   }
 }

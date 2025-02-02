@@ -1,20 +1,33 @@
 <mat-card class="user-detail-header">
+  <button [matMenuTriggerFor]="userMenu" mat-icon-button class="pin-right-upper-corner">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="editUserDetail()">Edit</button>
+  </mat-menu>
+
   <img class="img" src="assets/img/avatar.png" alt="Avatar" />
   <div class="user-details">
-    <h2>Donnacha O'Sullivan</h2>
-    email&#64;email.de
+    <h2>{{user.firstName}} {{user.lastName}}</h2>
+    {{user.email}}
   </div>
 </mat-card>
 
 <mat-card class="mt-32 address-details" appearance="outlined">
-  <button mat-icon-button class="pin-right-upper-corner" (click)="openAddressDialogue()">
+  <button [matMenuTriggerFor]="addressMenu" mat-icon-button class="pin-right-upper-corner">
     <mat-icon>more_vert</mat-icon>
   </button>
+
+  <mat-menu #addressMenu="matMenu">
+    <button mat-menu-item (click)="editAddressDetail()">Edit</button>
+  </mat-menu>
+
   <mat-card-header>
     <mat-card-title>Address</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    Musterstraße 28 <br />
-    12345 Musterstadt
+    {{user.street}} <br />
+    {{user.zipCode}} {{user.city}}
   </mat-card-content>
 </mat-card>

@@ -35,16 +35,20 @@ export class UserDetailComponent implements OnInit {
     const userDocRef = doc(this.firestore, `users/${this.userId}`);
     this.user$ = docData(userDocRef) as Observable<User>;
     this.user$.subscribe((user) => {
-      this.user = user;
+      this.user = new User(user);
     });
   }
 
   editUserDetail() {
-    this.dialog.open(DialogueEditUserComponent);
+    const dialogue = this.dialog.open(DialogueEditUserComponent);
+    dialogue.componentInstance.user = new User(this.user.toJSON());
+    dialogue.componentInstance.userId = this.userId;
+
   }
 
   editAddressDetail() {
     const dialogue = this.dialog.open(DialogueEditAddressComponent);
-    dialogue.componentInstance.user = this.user;
+    dialogue.componentInstance.user = new User(this.user.toJSON());
+    dialogue.componentInstance.userId = this.userId;
   }
 }

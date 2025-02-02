@@ -1,0 +1,11 @@
+.edit-user-container {
+  background-color: grey;
+  position: relative;
+  > mat-progress-bar {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 10px;
+    width: calc(100%);
+  }
+}

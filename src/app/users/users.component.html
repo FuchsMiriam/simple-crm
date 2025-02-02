@@ -14,7 +14,7 @@
         <td>{{user.street}}</td>
         <td>{{user.city}}</td>
         <td>{{user.email}}</td>
-        <td>{{user.birthDate}}</td>
+        <td>{{ getFormattedBirthDate(user.birthDate) }}</td>
       </tr>
     </table>
   </mat-card-content>

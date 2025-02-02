@@ -47,4 +47,8 @@ export class UsersComponent {
   openDialogue() {
     this.dialog.open(DialogueAddUserComponent);
   }
+
+  getFormattedBirthDate(date: number): string {
+    return new Date(date).toLocaleDateString('en-EN');
+  }
 }

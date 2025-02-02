@@ -20,7 +20,7 @@ import {
   getFirestore,
 } from '@angular/fire/firestore';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {MatDialogRef} from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialogue-add-user',
@@ -53,7 +53,6 @@ export class DialogueAddUserComponent {
 
   async saveUser() {
     this.user.birthDate = this.birthDate.getTime();
-    console.log('Current User', this.user);
     this.loading = true;
 
     try {
@@ -61,7 +60,6 @@ export class DialogueAddUserComponent {
 
       const result = await addDoc(usersCollection, this.user.toJSON());
       this.loading = false;
-      console.log('Adding user finished', result);
       this.dialogRef.close();
     } catch (error) {
       console.error('Error adding user:', error);

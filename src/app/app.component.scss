@@ -1,7 +1,9 @@
 mat-toolbar {
   height: 57px;
   gap: 10px;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #004d60, #00bcd4);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .mat-drawer-container {
@@ -14,6 +16,9 @@ mat-toolbar {
 
 .sidenav {
   width: 300px;
+  background-color: #121212; 
+  color: white;
+  box-shadow:  4px 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .logo-container {
@@ -41,11 +46,13 @@ mat-toolbar {
     display: flex;
     align-items: center;
     cursor: pointer;
+    transition: background 0.3s ease-in-out;
     mat-icon {
       margin-right: 16px;
+      color: lightcyan;
     }
     &:hover {
-      background-color: grey;
+      background-color: rgba(0, 255, 255, 0.2);
     }
     &:focus {
       outline: none;

@@ -1,1 +1,36 @@
-<p>dashboard works!</p>
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Total Users</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h2>{{ totalUsers }}</h2>
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngIf="donutChartLabels.length > 0" class="chart-container">
+    <canvas
+      baseChart
+      [labels]="donutChartLabels"
+      [data]="donutChartData"
+      [type]="donutChartType"
+      [options]="donutChartOptions">
+    </canvas>
+  </div>
+  
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Recent Changes</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let change of recentChanges">
+          <span>{{ change.user }} updated their info:</span>
+          <div><b>Old Info:</b> {{ change.oldInfo }}</div>
+          <div><b>New Info:</b> {{ change.newInfo }}</div>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+  
+  

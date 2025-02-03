@@ -7,6 +7,7 @@
         <th>City</th>
         <th>Email</th>
         <th>Birthday</th>
+        <th>Department</th>
       </tr>
 
       <tr *ngFor="let user of allUsers" [routerLink]="['/user/' + user.customIdName]">
@@ -15,6 +16,7 @@
         <td>{{user.city}}</td>
         <td>{{user.email}}</td>
         <td>{{ getFormattedBirthDate(user.birthDate) }}</td>
+        <td>{{user.department}}</td>
       </tr>
     </table>
   </mat-card-content>

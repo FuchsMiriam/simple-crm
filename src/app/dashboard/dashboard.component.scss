@@ -1,0 +1,86 @@
+/* Mat-Card für das gesamte Layout */
+mat-card {
+  background-color: #1c1c1c;
+  margin: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+
+  /* Header innerhalb der Mat-Card */
+  mat-card-header {
+    background-color: #333;
+    color: white;
+    border-radius: 8px;
+  }
+
+  ::ng-deep .mat-mdc-card-header-text {
+    margin-bottom: 10px;
+  }
+  
+
+  mat-card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  mat-card-content {
+    color: #e0e0e0;
+    margin-top: 10px;
+  }
+}
+
+/* Gesamtzahl der Benutzer */
+h2 {
+  font-size: 2rem;
+  color: white;
+  margin-top: 0;
+}
+
+/* Chart-Diagramm */
+.chart-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  height: 400px;
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Mat-List für die letzten Änderungen */
+mat-list {
+  margin-top: 10px;
+}
+
+mat-list-item {
+  background-color: #3e3e3e;
+  border-radius: 6px;
+  margin: 8px 0;
+  padding: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background-color: #3e3e3e;
+    cursor: pointer;
+  }
+
+  span {
+    color: white; /* Cyan für den Text der Änderungen */
+    font-weight: bold;
+
+    em {
+      color: white; /* Magenta für den Jobtitel */
+      font-style: italic;
+    }
+
+    span {
+      color: #aaa; /* Helleres Grau für das Datum */
+      font-size: 0.9rem;
+    }
+  }
+}

@@ -39,6 +39,7 @@ export class DashboardComponent implements AfterViewInit {
     [];
 
   //Total number of users
+
   constructor() {
     const usersCollection = collection(this.firestore, 'users');
     this.users$ = collectionData(usersCollection, { idField: 'id' });
@@ -50,6 +51,7 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   //Donut chart logic
+
   ngAfterViewInit() {
     setTimeout(() => {
       if (this.chart) {
@@ -148,4 +150,5 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   //Recent changes logic
+  
 }

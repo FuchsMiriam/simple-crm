@@ -10,7 +10,6 @@ import { MatCardModule } from '@angular/material/card';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { NgFor } from '@angular/common';
-import { Timestamp } from 'firebase/firestore';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -42,7 +41,6 @@ export class UsersComponent {
       this.allUsers = changes;
     });
   }
-
 
   openDialogue() {
     this.dialog.open(DialogueAddUserComponent);

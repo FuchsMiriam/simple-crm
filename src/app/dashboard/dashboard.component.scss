@@ -1,3 +1,8 @@
+.total-container {
+  display: flex;
+  align-items: flex-start;
+}
+
 /* Mat-Card für das gesamte Layout */
 mat-card {
   background-color: #1c1c1c;
@@ -16,7 +21,6 @@ mat-card {
   ::ng-deep .mat-mdc-card-header-text {
     margin-bottom: 10px;
   }
-  
 
   mat-card-title {
     font-size: 1.5rem;
@@ -38,9 +42,8 @@ h2 {
 
 /* Chart-Diagramm */
 .chart-container {
-  max-width: 600px;
+  max-width: 400px;
   margin: 0 auto;
-  padding: 20px;
   height: 400px;
 
   canvas {

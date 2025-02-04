@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { ChartOptions, ChartType } from 'chart.js';
@@ -28,9 +28,10 @@ ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend);
   imports: [CommonModule, MatCardModule, MatListModule, BaseChartDirective],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
-  
 })
-export class DashboardComponent {
+export class DashboardComponent implements AfterViewInit {
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+
   private firestore = inject(Firestore);
   public totalUsers: number = 0;
   public users$: Observable<any[]>;
@@ -49,21 +50,44 @@ export class DashboardComponent {
   }
 
   //Donut chart logic
+  ngAfterViewInit() {
+    setTimeout(() => {
+      if (this.chart) {
+        this.chart.update();
+      }
+    }, 0);
+  }
+
   public donutChartLabels: string[] = [];
   public donutChartData: any = {
     labels: this.donutChartLabels,
     datasets: [
       {
+        labels: 'Departments',
         data: [],
         backgroundColor: [
           'rgba(0, 77, 96, 1)',
           'rgba(0, 188, 212, 1)',
           'rgba(255, 0, 127, 1)',
+          'rgba(255, 102, 153, 1)',
+          'rgba(0, 60, 75, 1)',
+          'rgba(0, 100, 120, 1)',
+          'rgba(0, 210, 230, 1)',
+          'rgba(204, 0, 102, 1)',
+          'rgba(255, 51, 140, 1)',
+          'rgba(255, 130, 170, 1)',
         ],
         hoverBackgroundColor: [
           'rgba(0, 77, 96, 0.7)',
           'rgba(0, 188, 212, 0.7)',
           'rgba(255, 0, 127, 0.7)',
+          'rgba(255, 102, 153, 1)',
+          'rgba(0, 60, 75, 1)',
+          'rgba(0, 100, 120, 1)',
+          'rgba(0, 210, 230, 1)',
+          'rgba(204, 0, 102, 1)',
+          'rgba(255, 51, 140, 1)',
+          'rgba(255, 130, 170, 1)',
         ],
       },
     ],
@@ -74,10 +98,11 @@ export class DashboardComponent {
     responsive: true,
     plugins: {
       legend: {
+        display: true,
         position: 'top',
         labels: {
           font: {
-            size: 14,
+            size: 16,
           },
         },
       },
@@ -85,26 +110,41 @@ export class DashboardComponent {
         enabled: true,
       },
     },
+    elements: {
+      arc: {
+        borderWidth: 1,
+      },
+    },
+    layout: {
+      padding: 20,
+    },
   };
 
   groupUsersByDepartment(users: any[]) {
     const departmentNames: string[] = [];
     const departmentCounts: number[] = [];
-  
+
     users.forEach((user) => {
       const department = user.department || 'Unknown';
       const departmentIndex = departmentNames.indexOf(department);
-  
+
       if (departmentIndex === -1) {
         departmentNames.push(department);
         departmentCounts.push(1);
       } else {
         departmentCounts[departmentIndex]++;
       }
-    });  
+    });
 
-    this.donutChartLabels = departmentNames;
-    this.donutChartData.datasets[0].data = departmentCounts;  
+    this.donutChartLabels.length = 0;
+    this.donutChartLabels.push(...departmentNames);
+
+    this.donutChartLabels = [...departmentNames];
+    this.donutChartData.datasets[0].data = departmentCounts;
+
+    if (this.chart) {
+      this.chart.update();
+    }
   }
 
   //Recent changes logic

@@ -8,8 +8,8 @@ import {
   Firestore,
   collection,
   collectionData,
-  doc,
-  updateDoc,
+  QuerySnapshot,
+  DocumentChange
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import {
@@ -19,6 +19,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { User } from '../../models/user.class';
+import { onSnapshot } from 'firebase/firestore';
 
 ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -35,19 +37,20 @@ export class DashboardComponent implements AfterViewInit {
   private firestore = inject(Firestore);
   public totalUsers: number = 0;
   public users$: Observable<any[]>;
-  public recentChanges: { user: string; oldInfo: string; newInfo: string }[] =
-    [];
+  public recentChanges: { user: string; oldInfo: any; newInfo: any }[] = [];
 
   //Total number of users
 
   constructor() {
-    const usersCollection = collection(this.firestore, 'users');
+    const usersCollection: any = collection(this.firestore, 'users');
     this.users$ = collectionData(usersCollection, { idField: 'id' });
 
     this.users$.subscribe((users) => {
       this.totalUsers = users.length;
       this.groupUsersByDepartment(users);
     });
+
+    this.trackChanges(usersCollection);
   }
 
   //Donut chart logic
@@ -150,5 +153,23 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   //Recent changes logic
-  
+  trackChanges(usersCollection: any) {
+    onSnapshot(usersCollection, (snapshot: QuerySnapshot) => {
+      snapshot.docChanges().forEach((change: DocumentChange) => {
+        if (change.type === 'modified') {
+          const oldData = change.doc.data();
+          const newData = change.doc.data();
+
+          if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
+            const changeRecord = {
+              user: newData['name'],
+              oldInfo: oldData,
+              newInfo: newData,
+            };
+            this.recentChanges.unshift(changeRecord);
+          }
+        }
+      });
+    });
+  }
 }

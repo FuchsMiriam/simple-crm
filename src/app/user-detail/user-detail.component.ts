@@ -9,6 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogueEditAddressComponent } from '../dialogue-edit-address/dialogue-edit-address.component';
 import { DialogueEditUserComponent } from '../dialogue-edit-user/dialogue-edit-user.component';
+import { DialogueEditDepartmentComponent } from '../dialogue-edit-department/dialogue-edit-department.component';
 
 @Component({
   selector: 'app-user-detail',
@@ -48,6 +49,12 @@ export class UserDetailComponent implements OnInit {
 
   editAddressDetail() {
     const dialogue = this.dialog.open(DialogueEditAddressComponent);
+    dialogue.componentInstance.user = new User(this.user.toJSON());
+    dialogue.componentInstance.userId = this.userId;
+  }
+
+  editDepartmentDetail() {
+    const dialogue = this.dialog.open(DialogueEditDepartmentComponent);
     dialogue.componentInstance.user = new User(this.user.toJSON());
     dialogue.componentInstance.userId = this.userId;
   }

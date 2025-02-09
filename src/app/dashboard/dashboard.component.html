@@ -19,7 +19,7 @@
   </div>
 </div>
 
-<mat-card>
+<mat-card class="recentChanges">
   <mat-card-header>
     <mat-card-title>Recent Changes</mat-card-title>
   </mat-card-header>
@@ -27,8 +27,8 @@
     <mat-list>
       <mat-list-item *ngFor="let change of recentChanges">
         <span>{{ change.user }} updated their info:</span>
-        <div><b>Old Info:</b> {{ change.oldInfo }}</div>
-        <div><b>New Info:</b> {{ change.newInfo }}</div>
+        <div><b>Old Info:</b> {{ change.oldInfo | json }}</div>
+        <div><b>New Info:</b> {{ change.newInfo | json }}</div>
       </mat-list-item>
     </mat-list>
   </mat-card-content>

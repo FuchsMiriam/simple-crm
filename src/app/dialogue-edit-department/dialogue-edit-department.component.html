@@ -1,0 +1,17 @@
+<section class="edit-department-container">
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  
+   <h1 mat-dialog-title>Edit department</h1>
+    <mat-dialog-content class="mt-10">
+      <div>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Department</mat-label>
+          <input [disabled]="loading" [(ngModel)]="user.department" matInput placeholder="Placeholder" />
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button [disabled]="loading" (click)="dialogRef.close()"  mat-button mat-dialog-close>Cancel</button>
+      <button [disabled]="loading" (click)="editDepartment()" mat-button mat-dialog-close cdkFocusInitial>Save</button>
+    </mat-dialog-actions>
+  </section>

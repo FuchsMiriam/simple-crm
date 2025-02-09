@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, inject, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { ChartOptions, ChartType } from 'chart.js';
@@ -9,7 +9,6 @@ import {
   collection,
   collectionData,
   QuerySnapshot,
-  DocumentChange
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import {
@@ -20,7 +19,7 @@ import {
   Legend,
 } from 'chart.js';
 import { User } from '../../models/user.class';
-import { onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 
 ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -37,11 +36,13 @@ export class DashboardComponent implements AfterViewInit {
   private firestore = inject(Firestore);
   public totalUsers: number = 0;
   public users$: Observable<any[]>;
+  userId!: string;
   public recentChanges: { user: string; oldInfo: any; newInfo: any }[] = [];
+  oldUserDataCache: { [docId: string]: User } = {};
 
   //Total number of users
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     const usersCollection: any = collection(this.firestore, 'users');
     this.users$ = collectionData(usersCollection, { idField: 'id' });
 
@@ -154,22 +155,49 @@ export class DashboardComponent implements AfterViewInit {
 
   //Recent changes logic
   trackChanges(usersCollection: any) {
-    onSnapshot(usersCollection, (snapshot: QuerySnapshot) => {
-      snapshot.docChanges().forEach((change: DocumentChange) => {
+    onSnapshot(usersCollection, async (snapshot: QuerySnapshot) => {
+  
+      for (const change of snapshot.docChanges()) {
+  
         if (change.type === 'modified') {
-          const oldData = change.doc.data();
-          const newData = change.doc.data();
+          const userId = change.doc.id;
+          const newData = change.doc.data() as User;
 
-          if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
-            const changeRecord = {
-              user: newData['name'],
-              oldInfo: oldData,
-              newInfo: newData,
-            };
-            this.recentChanges.unshift(changeRecord);
+          let oldData = this.oldUserDataCache[userId];
+  
+          if (!oldData) {
+            const docRef = doc(this.firestore, 'users', userId);
+            const docSnap = await getDoc(docRef);
+  
+            if (docSnap.exists()) {
+              oldData = new User();
+              Object.assign(oldData, docSnap.data());
+            } else {
+              oldData = new User();
+            }
+          }
+  
+          if (oldData instanceof User) {
+            if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
+              const changeRecord = {
+                user: newData.firstName + ' ' + newData.lastName,
+                oldInfo: oldData,
+                newInfo: newData,
+              };
+  
+              this.recentChanges.unshift(changeRecord);
+              this.oldUserDataCache[userId] = newData;
+  
+              this.cdr.detectChanges();
+            } else {
+              console.log("Keine Änderungen festgestellt für Benutzer:", userId);
+            }
+          } else {
+            console.error('Alte Daten sind kein gültiges User-Objekt:', oldData);
           }
         }
-      });
+      }
     });
   }
+  
 }

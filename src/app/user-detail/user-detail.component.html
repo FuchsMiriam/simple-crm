@@ -33,11 +33,11 @@
 </mat-card>
 
 <mat-card class="mt-32 address-details" appearance="outlined">
-  <button [matMenuTriggerFor]="addressMenu" mat-icon-button class="pin-right-upper-corner">
+  <button [matMenuTriggerFor]="departmentMenu" mat-icon-button class="pin-right-upper-corner">
     <mat-icon>more_vert</mat-icon>
   </button>
 
-  <mat-menu #addressMenu="matMenu">
+  <mat-menu #departmentMenu="matMenu">
     <button mat-menu-item (click)="editDepartmentDetail()">Edit</button>
   </mat-menu>
   <mat-card-header>

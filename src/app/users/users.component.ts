@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -14,6 +14,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-users',
+  standalone: true,
   imports: [
     MatButtonModule,
     MatIconModule,
@@ -26,12 +27,14 @@ import { RouterLink } from '@angular/router';
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
   user: User = new User();
   users$!: Observable<any[]>;
   allUsers: any[] = [];
 
-  constructor(public dialog: MatDialog, private firestore: Firestore) {}
+  private firestore = inject(Firestore); 
+
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     const usersCollection = collection(this.firestore, 'users');
@@ -43,7 +46,9 @@ export class UsersComponent {
   }
 
   openDialogue() {
+    const buttonElement = document.activeElement as HTMLElement;
     this.dialog.open(DialogueAddUserComponent);
+    buttonElement.blur(); 
   }
 
   getFormattedBirthDate(date: number): string {

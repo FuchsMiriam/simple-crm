@@ -31,6 +31,10 @@ mat-card {
     color: #e0e0e0;
     margin-top: 10px;
   }
+
+  mat-list-item{
+    height: auto;
+  }
 }
 
 /* Gesamtzahl der Benutzer */
@@ -89,5 +93,7 @@ mat-list-item {
 }
 
 .recentChanges {
-  height: 400px;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
 }

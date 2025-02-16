@@ -19,7 +19,7 @@ import {
   Legend,
 } from 'chart.js';
 import { User } from '../../models/user.class';
-import { doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, limit, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore';
 
 ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -50,8 +50,6 @@ export class DashboardComponent implements AfterViewInit {
       this.totalUsers = users.length;
       this.groupUsersByDepartment(users);
     });
-
-    this.trackChanges(usersCollection);
   }
 
   //Donut chart logic
@@ -154,50 +152,17 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   //Recent changes logic
-  trackChanges(usersCollection: any) {
-    onSnapshot(usersCollection, async (snapshot: QuerySnapshot) => {
+  ngOnInit() {
+    const changesRef = collection(this.firestore, 'recentChanges');
+    const q = query(changesRef, orderBy('timestamp', 'desc'), limit(10));
   
-      for (const change of snapshot.docChanges()) {
-  
-        if (change.type === 'modified') {
-          const userId = change.doc.id;
-          const newData = change.doc.data() as User;
-
-          let oldData = this.oldUserDataCache[userId];
-  
-          if (!oldData) {
-            const docRef = doc(this.firestore, 'users', userId);
-            const docSnap = await getDoc(docRef);
-  
-            if (docSnap.exists()) {
-              oldData = new User();
-              Object.assign(oldData, docSnap.data());
-            } else {
-              oldData = new User();
-            }
-          }
-  
-          if (oldData instanceof User) {
-            if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
-              const changeRecord = {
-                user: newData.firstName + ' ' + newData.lastName,
-                oldInfo: oldData,
-                newInfo: newData,
-              };
-  
-              this.recentChanges.unshift(changeRecord);
-              this.oldUserDataCache[userId] = newData;
-  
-              this.cdr.detectChanges();
-            } else {
-              console.log("Keine Änderungen festgestellt für Benutzer:", userId);
-            }
-          } else {
-            console.error('Alte Daten sind kein gültiges User-Objekt:', oldData);
-          }
-        }
-      }
+    onSnapshot(q, (snapshot) => {
+      this.recentChanges = snapshot.docs.map(doc => doc.data() as { 
+        user: string; 
+        oldInfo: any; 
+        newInfo: any; 
+      });
     });
   }
-  
+         
 }

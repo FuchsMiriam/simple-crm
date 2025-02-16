@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,7 +23,9 @@ export class UserDetailComponent implements OnInit {
   user: User = new User();
   user$!: Observable<User>;
 
-  constructor(private route: ActivatedRoute, private firestore: Firestore, public dialog: MatDialog) {}
+   private firestore = inject(Firestore); 
+
+  constructor(private route: ActivatedRoute, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {

@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ViewChild, AfterViewInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { ChartOptions, ChartType } from 'chart.js';
@@ -8,7 +8,6 @@ import {
   Firestore,
   collection,
   collectionData,
-  QuerySnapshot,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import {
@@ -19,7 +18,7 @@ import {
   Legend,
 } from 'chart.js';
 import { User } from '../../models/user.class';
-import { doc, getDoc, limit, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore';
+import { limit, onSnapshot, orderBy, query} from 'firebase/firestore';
 
 ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -42,7 +41,7 @@ export class DashboardComponent implements AfterViewInit {
 
   //Total number of users
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor() {
     const usersCollection: any = collection(this.firestore, 'users');
     this.users$ = collectionData(usersCollection, { idField: 'id' });
 
@@ -151,10 +150,10 @@ export class DashboardComponent implements AfterViewInit {
     }
   }
 
-  //Recent changes logic
+  //Recent changes
   ngOnInit() {
     const changesRef = collection(this.firestore, 'recentChanges');
-    const q = query(changesRef, orderBy('timestamp', 'desc'), limit(10));
+    const q = query(changesRef, orderBy('timestamp', 'desc'), limit(3));
   
     onSnapshot(q, (snapshot) => {
       this.recentChanges = snapshot.docs.map(doc => doc.data() as { 
@@ -164,5 +163,22 @@ export class DashboardComponent implements AfterViewInit {
       });
     });
   }
+
+  getChangedFields(oldInfo: any, newInfo: any) {
+    const changes: { field: string; oldValue: any; newValue: any }[] = [];
+  
+    Object.keys(oldInfo).forEach(key => {
+      if (oldInfo[key] !== newInfo[key]) {
+        changes.push({
+          field: key,
+          oldValue: oldInfo[key],
+          newValue: newInfo[key]
+        });
+      }
+    });
+  
+    return changes;
+  }
+  
          
 }

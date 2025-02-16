@@ -26,9 +26,10 @@
   <mat-card-content>
     <mat-list>
       <mat-list-item *ngFor="let change of recentChanges">
-        <span>{{ change.user }} updated their info:</span>
-        <div><b>Old Info:</b> {{ change.oldInfo | json }}</div>
-        <div><b>New Info:</b> {{ change.newInfo | json }}</div>
+        <span>{{ change.newInfo.firstName }} {{ change.newInfo.lastName }} updated their info:</span>
+        <div *ngFor="let changeField of getChangedFields(change.oldInfo, change.newInfo)">
+          <p><b>Changed</b> {{ changeField.oldValue }} <b>to</b> {{ changeField.newValue }}</p>
+        </div>
       </mat-list-item>
     </mat-list>
   </mat-card-content>

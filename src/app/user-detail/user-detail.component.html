@@ -1,5 +1,9 @@
 <mat-card class="user-detail-header">
-  <button [matMenuTriggerFor]="userMenu" mat-icon-button class="pin-right-upper-corner">
+  <button
+    [matMenuTriggerFor]="userMenu"
+    mat-icon-button
+    class="pin-right-upper-corner"
+  >
     <mat-icon>more_vert</mat-icon>
   </button>
 
@@ -9,13 +13,17 @@
 
   <img class="img" src="assets/img/avatar.png" alt="Avatar" />
   <div class="user-details">
-    <h2>{{user.firstName}} {{user.lastName}}</h2>
-    <p>{{user.email}}</p>
+    <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+    <p>{{ user.email }}</p>
   </div>
 </mat-card>
 
 <mat-card class="mt-32 address-details" appearance="outlined">
-  <button [matMenuTriggerFor]="addressMenu" mat-icon-button class="pin-right-upper-corner">
+  <button
+    [matMenuTriggerFor]="addressMenu"
+    mat-icon-button
+    class="pin-right-upper-corner"
+  >
     <mat-icon>more_vert</mat-icon>
   </button>
 
@@ -27,13 +35,17 @@
     <mat-card-title>Address</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    {{user.street}} <br />
-    {{user.zipCode}} {{user.city}}
+    {{ user.street }} <br />
+    {{ user.zipCode }} {{ user.city }}
   </mat-card-content>
 </mat-card>
 
 <mat-card class="mt-32 address-details" appearance="outlined">
-  <button [matMenuTriggerFor]="departmentMenu" mat-icon-button class="pin-right-upper-corner">
+  <button
+    [matMenuTriggerFor]="departmentMenu"
+    mat-icon-button
+    class="pin-right-upper-corner"
+  >
     <mat-icon>more_vert</mat-icon>
   </button>
 
@@ -44,6 +56,14 @@
     <mat-card-title>Department</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    {{user.department}}
+    {{ user.department }}
   </mat-card-content>
 </mat-card>
+
+<div class="delete-container">
+  <button (click)="deleteUser()" mat-fab extended matTooltip="Delete user" matTooltipPosition="above">
+    <mat-icon>delete</mat-icon>
+    Delete
+  </button>
+</div>
+

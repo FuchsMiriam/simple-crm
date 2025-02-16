@@ -10,11 +10,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogueEditAddressComponent } from '../dialogue-edit-address/dialogue-edit-address.component';
 import { DialogueEditUserComponent } from '../dialogue-edit-user/dialogue-edit-user.component';
 import { DialogueEditDepartmentComponent } from '../dialogue-edit-department/dialogue-edit-department.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-user-detail',
   standalone: true,
-  imports: [MatCardModule, MatIconModule, MatMenuModule],
+  imports: [MatCardModule, MatIconModule, MatMenuModule, MatTooltipModule, MatButtonModule],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss',
 })
@@ -60,4 +62,6 @@ export class UserDetailComponent implements OnInit {
     dialogue.componentInstance.user = new User(this.user.toJSON());
     dialogue.componentInstance.userId = this.userId;
   }
+
+  deleteUser(){}
 }

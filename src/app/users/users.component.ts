@@ -10,8 +10,8 @@ import { MatCardModule } from '@angular/material/card';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { NgFor } from '@angular/common';
-import { RouterLink } from '@angular/router';
-
+import { Router, RouterLink } from '@angular/router';
+import { deleteDoc, doc } from 'firebase/firestore';
 @Component({
   selector: 'app-users',
   standalone: true,
@@ -34,7 +34,7 @@ export class UsersComponent implements OnInit {
 
   private firestore = inject(Firestore); 
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {
     const usersCollection = collection(this.firestore, 'users');
@@ -53,5 +53,17 @@ export class UsersComponent implements OnInit {
 
   getFormattedBirthDate(date: number): string {
     return new Date(date).toLocaleDateString('en-EN');
+  }
+
+  deleteUser(userId: string) {
+    const userRef = doc(this.firestore, 'users', userId);
+    
+    deleteDoc(userRef)
+      .then(() => {
+        this.router.navigate(['/users']);
+      })
+      .catch((error) => {
+        console.error('Fehler beim Löschen des Users:', error);
+      });
   }
 }

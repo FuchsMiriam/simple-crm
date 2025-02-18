@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { Firestore, doc, docData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
@@ -12,6 +12,7 @@ import { DialogueEditUserComponent } from '../dialogue-edit-user/dialogue-edit-u
 import { DialogueEditDepartmentComponent } from '../dialogue-edit-department/dialogue-edit-department.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
+import { deleteDoc } from 'firebase/firestore';
 
 @Component({
   selector: 'app-user-detail',
@@ -27,7 +28,7 @@ export class UserDetailComponent implements OnInit {
 
    private firestore = inject(Firestore); 
 
-  constructor(private route: ActivatedRoute, public dialog: MatDialog) {}
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, private router: Router, ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -63,5 +64,15 @@ export class UserDetailComponent implements OnInit {
     dialogue.componentInstance.userId = this.userId;
   }
 
-  deleteUser(){}
+    deleteUser(userId: string) {
+      const userRef = doc(this.firestore, 'users', userId);
+      
+      deleteDoc(userRef)
+        .then(() => {
+          this.router.navigate(['/users']);
+        })
+        .catch((error) => {
+          console.error('Fehler beim Löschen des Users:', error);
+        });
+    }
 }

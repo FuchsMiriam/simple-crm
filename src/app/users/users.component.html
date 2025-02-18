@@ -10,13 +10,19 @@
         <th>Department</th>
       </tr>
 
-      <tr *ngFor="let user of allUsers" [routerLink]="['/user/' + user.customIdName]">
+      <tr
+        *ngFor="let user of allUsers"
+        [routerLink]="['/user/' + user.customIdName]"
+      >
         <td>{{ user.firstName }} {{ user.lastName }}</td>
-        <td>{{user.street}}</td>
-        <td>{{user.city}}</td>
-        <td>{{user.email}}</td>
+        <td>{{ user.street }}</td>
+        <td>{{ user.city }}</td>
+        <td>{{ user.email }}</td>
         <td>{{ getFormattedBirthDate(user.birthDate) }}</td>
-        <td>{{user.department}}</td>
+        <td>{{ user.department }}</td>
+        <button  (click)="deleteUser(user.customIdName)" mat-fab matTooltip="Delete user" matTooltipPosition="above">
+          <mat-icon>delete</mat-icon>
+        </button>
       </tr>
     </table>
   </mat-card-content>

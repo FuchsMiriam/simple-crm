@@ -29,6 +29,11 @@ mat-card-content {
         color: black;
       }
     }
+    button{
+      margin-top: 5px;
+      margin-bottom: 5px;
+      z-index: 10;
+    }
   }
 
   th {

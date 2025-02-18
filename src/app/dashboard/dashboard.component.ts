@@ -19,6 +19,7 @@ import {
 } from 'chart.js';
 import { User } from '../../models/user.class';
 import { limit, onSnapshot, orderBy, query} from 'firebase/firestore';
+import { ChangeDetectorRef } from '@angular/core';
 
 ChartJS.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -41,13 +42,26 @@ export class DashboardComponent implements AfterViewInit {
 
   //Total number of users
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     const usersCollection: any = collection(this.firestore, 'users');
     this.users$ = collectionData(usersCollection, { idField: 'id' });
 
     this.users$.subscribe((users) => {
       this.totalUsers = users.length;
       this.groupUsersByDepartment(users);
+    });
+  }
+
+  ngOnInit() {
+    const changesRef = collection(this.firestore, 'recentChanges');
+    const q = query(changesRef, orderBy('timestamp', 'desc'), limit(3));
+  
+    onSnapshot(q, (snapshot) => {
+      this.recentChanges = snapshot.docs.map(doc => doc.data() as { 
+        user: string; 
+        oldInfo: any; 
+        newInfo: any; 
+      });
     });
   }
 
@@ -147,22 +161,12 @@ export class DashboardComponent implements AfterViewInit {
 
     if (this.chart) {
       this.chart.update();
+
+      this.cdr.detectChanges(); 
     }
   }
 
   //Recent changes
-  ngOnInit() {
-    const changesRef = collection(this.firestore, 'recentChanges');
-    const q = query(changesRef, orderBy('timestamp', 'desc'), limit(3));
-  
-    onSnapshot(q, (snapshot) => {
-      this.recentChanges = snapshot.docs.map(doc => doc.data() as { 
-        user: string; 
-        oldInfo: any; 
-        newInfo: any; 
-      });
-    });
-  }
 
   getChangedFields(oldInfo: any, newInfo: any) {
     const changes: { field: string; oldValue: any; newValue: any }[] = [];
